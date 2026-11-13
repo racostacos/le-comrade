@@ -1,5 +1,6 @@
 ---
 title: "Ballot Initiatives: Giving Louisiana Back to Its People"
+author: Ethan Drott
 section: vision
 summary: Louisianans are no strangers to waiting on change that never seems to
   come. While our lawmakers sit on legislation that could improve the lives of
@@ -9,7 +10,6 @@ summary: Louisianans are no strangers to waiting on change that never seems to
   politicians. So why don't Louisianans have that same right, and what would it
   take to change that?
 date: 2026-11-13
-author: Ethan Drott
 published: true
 ---
 A ballot initiative is a form of direct democracy that allows citizens to propose legislation or constitutional changes and submit those proposals to voters after collecting a legally required number of petition signatures. A ballot initiative is somewhat similar to how we can recall elected officials by collecting enough signatures within a specified timespan. Unlike ordinary legislation introduced by lawmakers and enacted by elected representatives, ballot initiatives allow voters to begin the lawmaking process themselves (University of Wisconsin Law School, 2023). Ballot initiatives in the state of Louisiana would allow everyday people to bypass legislative inaction, take political power into our own hands, and expand our individual rights.
@@ -87,9 +87,7 @@ I respectfully ask that you support a constitutional amendment establishing:
 
 Numerous states already provide their residents with these democratic powers. Louisiana should afford its citizens the same opportunity to participate directly in government.
 
-This is not a partisan request. Regardless of political affiliation, Louisianans should have the ability to bring important questions before their fellow voters. Our elected representatives should not possess exclusive control over which proposed changes citizens are permitted to consider.
-
-**I ask that you introduce or co-sponsor a constitutional amendment establishing statewide citizen initiative and referendum powers during the next legislative session.**
+**I ask that you introduce a constitutional amendment establishing statewide citizen initiative and referendum powers during the next legislative session.**
 
 Please let me know whether you support this reform and whether you would be willing to sponsor or co-sponsor such legislation.
 
