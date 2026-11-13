@@ -1,0 +1,38 @@
+name: Publish Word documents
+on:
+  push:
+    branches: [main]
+    paths:
+      - "articles/**"
+      - "scripts/build-articles.mjs"
+      - "package.json"
+      - ".github/workflows/publish-docx.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: word-publishing
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install DOCX converter
+        run: npm install --no-audit --no-fund
+      - name: Build articles
+        run: npm run build
+      - name: Commit generated newspaper content
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A public/content
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish DOCX articles to website"
+            git push
+          fi
