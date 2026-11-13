@@ -31,7 +31,7 @@ Check the **Actions → Publish Word documents** workflow in GitHub. The workflo
 - `.github/workflows/publish-docx.yml`: automatic publishing workflow
 - `wrangler.jsonc`: existing Cloudflare Worker setup
 
-The older D1 and Access-backed article API remains in the repository for now but **is not used for Word-based publishing**. Your public masthead is unchanged. The new publishing process requires only GitHub upload plus automatic deployment.
+The previous D1 database API, administrator login code, and database schema have been removed from the repository. The site now serves static files and Word-generated articles only. The masthead is unchanged.\n\n**Cloudflare dashboard note:** The old D1 database and Zero Trust Access application are external Cloudflare resources; removing code does not delete those resources or their settings. If the old Access application still protects `/admin`, it may show a login screen before the upload instructions. The direct GitHub upload link works independently of that application.
 
 ## Editorial note
 
