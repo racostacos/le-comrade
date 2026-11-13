@@ -9,7 +9,7 @@ summary: Louisianans are no strangers to waiting on change that never seems to
   politicians. So why don't Louisianans have that same right, and what would it
   take to change that?
 date: 2026-11-13
-published: false
+published: true
 ---
 A ballot initiative is a form of direct democracy that allows citizens to propose legislation or constitutional changes and submit those proposals to voters after collecting a legally required number of petition signatures. A ballot initiative is somewhat similar to how we can recall elected officials by collecting enough signatures within a specified timespan. Unlike ordinary legislation introduced by lawmakers and enacted by elected representatives, ballot initiatives allow voters to begin the lawmaking process themselves (University of Wisconsin Law School, 2023). Ballot initiatives in the state of Louisiana would allow everyday people to bypass legislative inaction, take political power into our own hands, and expand our individual rights.
 
