@@ -18,6 +18,7 @@
     }
   ],
   "vars": {
-    "ACCESS_AUD": "9b39ebc52510909f599c8b16eaaa3feba836a199ea70680eef79bbbf32db4b93"
+    "ACCESS_AUD": "9b39ebc52510909f599c8b16eaaa3feba836a199ea70680eef79bbbf32db4b93",
+    "ACCESS_TEAM_DOMAIN": "late-paper-3cb6.cloudflareaccess.com"
   }
 }
