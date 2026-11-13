@@ -1,0 +1,61 @@
+media:
+  input: public/media
+  output: /media
+  rename: true
+  categories: [image]
+
+content:
+  - name: articles
+    label: Articles
+    type: collection
+    path: content/posts
+    format: yaml-frontmatter
+    filename: "{year}-{month}-{day}-{primary}.md"
+    view:
+      fields: [title, section, published, date]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Headline
+        type: string
+        required: true
+      - name: section
+        label: Newspaper section
+        type: select
+        required: true
+        options:
+          values:
+            - name: vision
+              label: The Louisiana We Deserve
+            - name: history
+              label: The People's History
+            - name: ledger
+              label: Follow the Money
+            - name: dispatch
+              label: Parish Dispatch
+            - name: reading
+              label: Reading Room
+      - name: summary
+        label: Article summary
+        type: text
+        description: Short introduction shown in article listings.
+      - name: date
+        label: Publication date
+        type: date
+        options:
+          format: yyyy-MM-dd
+      - name: published
+        label: Published on website
+        type: boolean
+        default: false
+        description: Turn on when ready to publish. Unpublished entries are hidden from the website but are stored in GitHub.
+      - name: body
+        label: Article text
+        type: rich-text
+        options:
+          format: markdown
+          switcher: true
