@@ -1,0 +1,12 @@
+{
+  "name": "le-comrade",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-articles.mjs"
+  },
+  "dependencies": {
+    "mammoth": "^1.9.0",
+    "sanitize-html": "^2.13.0"
+  }
+}
