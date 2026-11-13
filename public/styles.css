@@ -39,3 +39,5 @@
 .archive-row{display:grid;grid-template-columns:108px 1fr;gap:25px;padding:23px 0;border-bottom:1px solid var(--line)}
 .archive-stamp{border:1px solid var(--red);color:var(--red);padding:8px;font:700 11px/1.4 'DM Sans',sans-serif;letter-spacing:.06em;text-align:center;align-self:start}
 @media(max-width:760px){.book-list{grid-template-columns:1fr}.book-row{grid-template-columns:90px minmax(0,1fr)}.book-art{width:90px;min-height:125px}.book-art img{height:125px}.book-cover-fallback{min-height:125px}.archive-row{grid-template-columns:1fr;gap:10px}.archive-stamp{justify-self:start}.library-feature{padding:21px}}
+
+.book-art img[hidden]{display:none!important}
