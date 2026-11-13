@@ -7,7 +7,15 @@
   <meta name="theme-color" content="#222520">
   <title>Le Comrade | A Different Louisiana Is Possible</title>
   <link rel="stylesheet" href="/styles.css">
-  <script defer src="/app.js"></script>
+  <script>
+    window.addEventListener("error", function(event) {
+      var main = document.getElementById("main");
+      if (main && main.textContent.includes("Setting the press")) {
+        main.textContent = "The page script failed to load: " + (event.message || "unknown error") + ". Please report this message.";
+      }
+    });
+  </script>
+  <script defer src="/app.js?v=fix-20261113-2" onerror="document.getElementById('main').textContent='The application script could not be downloaded. Please check that /app.js is accessible.'"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
