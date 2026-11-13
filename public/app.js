@@ -30,7 +30,7 @@ const forthcomingBooks=[
 ];
 const archiveSources=[
   {title:"Share Our Wealth (1934)",author:"Huey P. Long · Primary source",description:"Long's 1934 argument for wealth limits, basic security, and a more equitable distribution of prosperity.",url:"https://www.senate.gov/artandhistory/history/common/generic/Speeches_Long_EveryManKing.htm",kind:"SPEECH"},
-  {title:"The Voice of the People (1913)",author:"Edited by Covington Hall · Labor newspaper",description:"A contemporary labor newspaper formerly known as The Lumberjack, not a work authored by Huey Long.",url:"https://marxists.architexturez.net/history/usa/pubs/lumberjack/131113-voiceofthepeople-v2n45.pdf",kind:"PERIODICAL"},
+  {title:"The Voice of the People (1913)",author:"Edited by Covington Hall · Labor newspaper",description:"A contemporary labor newspaper formerly known as The Lumberjack.",url:"https://marxists.architexturez.net/history/usa/pubs/lumberjack/131113-voiceofthepeople-v2n45.pdf",kind:"PERIODICAL"},
   {title:"The Socialist Vote in Louisiana, 1912",author:"H. Grady McWhiney · 1951 thesis",description:"Historical research on the Socialist vote and the state's labor-radical networks in 1912.",url:"https://repository.lsu.edu/gradschool_disstheses/8414/",kind:"THESIS"}
 ];
 function bookRow(book){
