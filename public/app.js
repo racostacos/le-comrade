@@ -6,7 +6,7 @@ const pillars=[
  ["Louisiana Belongs to Louisianans","Land, industry, Indigenous restitution, worker ownership and corporate accountability."],
  ["A Life Worth Living","Universal healthcare, better schools and public services."],
  ["A Louisiana That Survives","Coastal restoration, recycling, environmental protection and industrial scrutiny."],
- ["Freedom Without Fear","End the death penalty, challenge surveillance and rethink public safety."]
+ ["Freedom Without Fear","End the death penalty, challenge surveillance and rethink public safety. LGBTQIA+ rights."]
 ];
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const header=(label,title,subtitle)=>'<div class="page-header"><div class="eyebrow">'+esc(label)+'</div><h1>'+esc(title)+'</h1><p class="lead">'+esc(subtitle)+'</p></div>';
