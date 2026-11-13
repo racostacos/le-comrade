@@ -1,59 +1,25 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Le Comrade</title>
-  <style>
-    body {
-      margin: 0;
-      background: #e9dfc8;
-      color: #1d211e;
-      font-family: Georgia, serif;
-    }
-    header {
-      padding: 32px 20px;
-      background: #1d211e;
-      color: #e9dfc8;
-      text-align: center;
-    }
-    h1 {
-      font-size: clamp(36px, 7vw, 80px);
-      text-transform: uppercase;
-      margin: 12px 0;
-      line-height: 1;
-    }
-    .red { color: #c34336; }
-    nav { padding: 18px; border-bottom: 2px solid; text-align: center; }
-    nav a { color: inherit; margin: 8px; }
-    main { max-width: 850px; margin: 60px auto; padding: 20px; }
-    h2 { font-size: clamp(30px, 5vw, 56px); }
-    p { font-size: 20px; line-height: 1.6; }
-  </style>
+  <meta name="description" content="Le Comrade: an independent people's journal examining Louisiana's power, history, and future.">
+  <meta name="theme-color" content="#222520">
+  <title>Le Comrade | A Different Louisiana Is Possible</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="/app.js"></script>
 </head>
 <body>
-  <header>
-    <small>AN INDEPENDENT PEOPLE'S JOURNAL</small>
-    <h1>Le<br><span class="red">Comrade</span></h1>
-    <p>A DIFFERENT LOUISIANA IS POSSIBLE.</p>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="utility"><span>AN INDEPENDENT PEOPLE'S JOURNAL</span><span>LOUISIANA · EST. 2026</span></div>
+  <header class="masthead">
+    <a href="/" class="brand" aria-label="Le Comrade home"><span class="brand-kicker">THE LIVINGSTON JOURNAL OF IDEAS & RESISTANCE</span><strong>LE <span>COMRADE</span></strong><small>A DIFFERENT LOUISIANA IS POSSIBLE.</small></a>
   </header>
-  <nav>
-    <a href="#vision">Our Vision</a>
-    <a href="#history">History</a>
-    <a href="#about">About</a>
+  <nav class="navigation" aria-label="Primary navigation">
+    <a href="/" data-nav="/">Front Page</a><a href="/vision" data-nav="/vision">Our Vision</a><a href="/history" data-nav="/history">People's History</a><a href="/ledger" data-nav="/ledger">Follow the Money</a><a href="/dispatch" data-nav="/dispatch">Parish Dispatch</a><a href="/reading" data-nav="/reading">Reading Room</a><a href="/about" data-nav="/about">About</a>
   </nav>
-  <main>
-    <h2 id="vision">A Louisiana That Belongs to Its People.</h2>
-    <p>Investigating power, recovering histories of resistance,
-    and proposing a different future for Louisiana.</p>
-    <hr>
-    <h2 id="history">The People's History</h2>
-    <p>Louisiana's history is also a history of resistance.</p>
-    <hr>
-    <h2 id="about">About the Publication</h2>
-    <p>Le Comrade is an independent political
-    journal examining Louisiana's past, present, and future.</p>
-  </main>
+  <div class="ticker"><span>THE PEOPLE'S PRESS</span><p>LAND · LABOR · LIBERTY · LOUISIANA</p><span>VOL. I / NO. 001</span></div>
+  <main id="main" tabindex="-1"><div class="loading">Setting the press...</div></main>
+  <footer class="footer"><div><b>LE COMRADE</b><p>Independent writing on Louisiana's history, power and possibilities.</p></div><div><a href="/sources">Sources & Corrections</a><a href="/about">About the publication</a><a href="/admin">Editorial login</a></div><small>© <span id="year"></span> Le Comrade. An independent publication.</small></footer>
 </body>
 </html>
