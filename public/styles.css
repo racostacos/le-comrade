@@ -101,3 +101,6 @@
 .pledge-hp{position:absolute!important;left:-10000px!important;width:1px;height:1px;overflow:hidden}
 @media(max-width:860px){.pledge-layout{grid-template-columns:1fr;gap:28px}.pledge-panel{max-width:620px}}
 @media(max-width:500px){.pledge-panel{padding:24px 20px}.pledge-hero{padding-top:20px}.pledge-hero h1{font-size:clamp(56px,15vw,78px)}}
+
+/* Campaign URL in article summaries */
+.article-row .summary-pledge-link,.article .summary-pledge-link{color:var(--red);text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere;font-weight:600}
