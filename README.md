@@ -1,71 +1,38 @@
 # Le Comrade
-A standalone Louisiana political and historical journal on Cloudflare Workers.
 
-## Included
-- Responsive industrial-newspaper homepage with five pillars
-- Vision, People's History, Follow the Money, Parish Dispatch, Reading Room, About and Sources & Corrections
-- Public article listings and article detail pages
-- Admin writing interface at `/admin`
-- D1-backed draft and published articles
-- Authenticated admin API with cryptographic Cloudflare Access JWT validation and explicit administrator email check
+An independent Louisiana newspaper-style publication, hosted on Cloudflare at https://le-comrade.org.
 
-## Deployment status and what remains
-The static website deploys using `npx wrangler deploy`. The article database and editor are **not operational** until D1 and Cloudflare Access are configured. If `DB` is missing, the API deliberately responds with HTTP 503. If Access is not configured, admin actions are denied.
+## Publish an article (no website coding or editor login)
 
-### 1. Create a D1 database
-In Cloudflare, go to **Storage & databases → D1 SQL Database → Create database**. Name it `le-comrade-content`. Copy its **database ID**.
+1. Write your article in Microsoft Word, Google Docs (export as Word), or another editor, and save as **.docx**.
+2. Format the article title using **Heading 1** in the document. Use **Heading 2** for subheadings. Ordinary paragraphs, bold, italics, lists, tables, links, and inline pictures are converted automatically.
+3. Name the DOCX file: `YYYY-MM-DD_section_Article Title.docx`, for example `2026-11-13_history_The German Coast Uprising.docx`. Sections are `vision`, `history`, `ledger`, `dispatch`, `reading`. If no section is specified, the article goes to the Reading Room.
+4. In your browser, open **[Upload DOCX to Le Comrade](https://github.com/racostacos/le-comrade/upload/main/articles)**, select the file, and click **Commit changes**.
+5. GitHub Actions automatically converts Word documents to safe HTML and commits `public/content/articles.json`; your existing Cloudflare GitHub integration deploys the result. Published articles appear in their respective section and on the front page.
 
-In GitHub, open `wrangler.jsonc` and add this top-level entry (with a real ID, not the placeholder):
-```json
-"d1_databases": [
-  {
-    "binding": "DB",
-    "database_name": "le-comrade-content",
-    "database_id": "YOUR_ACTUAL_DATABASE_UUID"
-  }
-]
-```
-Keep the rest of the JSON intact and include the comma between entries. GitHub's commit triggers deployment.
+The website's **/admin** page also links to the upload screen. There is **no separate website editor login** to configure. Your GitHub account is the upload permission system. Since uploads to the main repository publish automatically, **keep unfinished drafts in Word and only upload when ready**.
 
-Open the D1 database's **Console**, paste the contents of `schema.sql`, and execute it against your production database. Alternatively, from a local checkout run:
-```sh
-npx wrangler d1 execute le-comrade-content --remote --file=./schema.sql
-```
+### Edit or unpublish
 
-### 2. Protect the editor with Cloudflare Access
-In Cloudflare Zero Trust, create a **self-hosted Access application** scoped to `le-comrade.org/admin*` and `le-comrade.org/api/admin/*` (if necessary, separate Access applications with their own AUD tags; see below). Set an **Allow** policy restricted to your email address only. Do not protect the entire website: readers must be able to view public pages.
+To edit, upload a revised DOCX with **the same filename** and replace the existing file in GitHub using its file management flow, or commit a change replacing that file. To unpublish, remove the DOCX from `articles/` in GitHub. The automation regenerates the article index. Do not delete generated `public/content/articles.json` manually.
 
-**Important:** Use **one Access application covering both admin routes with the same AUD tag**, or implement separate matching audience tags in the Worker. The current Worker accepts one `ACCESS_AUD` tag. A reliable alternative is to protect just `/api/admin/*` with Access, since the editor UI itself holds no private data; the API must be protected. Keep the site public.
+### Troubleshooting
 
-Get the Application Audience (AUD) tag from that Access application.
+Check the **Actions → Publish Word documents** workflow in GitHub. The workflow needs repository Actions enabled and **contents: write** permission to commit the generated index. If your repository rules prevent GitHub Actions from pushing to main, approve the generated change through a permitted pull request or adjust the repository's workflow permissions. Cloudflare deploys when generated content is committed to main.
 
-In the Worker **Settings → Variables and Secrets**, configure:
-- `ACCESS_TEAM_DOMAIN`: your actual `your-team.cloudflareaccess.com` hostname (no trailing slash).
-- `ACCESS_AUD`: the exact audience tag of the API's Access application.
-- `ADMIN_EMAIL`: your exact sign-in email address.
+## Project structure
 
-Do **not** put these values into `public/`. Set them as Worker variables, and keep authentication secrets out of GitHub.
+- `public/index.html`: existing masthead and navigation (left intact during DOCX publishing simplification)
+- `public/styles.css`: responsive newspaper and document styling
+- `public/app.js`: page routing and static article reader
+- `articles/`: your Word documents, published from GitHub
+- `scripts/build-articles.mjs`: converts DOCX to cleaned HTML, saves images
+- `public/content/articles.json`: generated article index (do not edit manually)
+- `.github/workflows/publish-docx.yml`: automatic publishing workflow
+- `wrangler.jsonc`: existing Cloudflare Worker setup
 
-### 3. Test
-1. Visit `https://le-comrade.org`, `/vision`, `/history` and `/sources`.
-2. Visit `https://le-comrade.org/admin`. Authenticate via Cloudflare Access when prompted by the protected API.
-3. Write a test article, click **Save Draft**, and confirm it **does not** appear publicly.
-4. Click **Publish Article**, then verify it appears in its section and at `/article/<slug>`.
-5. Click **Unpublish** to remove it from public listings.
+The older D1 and Access-backed article API remains in the repository for now but **is not used for Word-based publishing**. Your public masthead is unchanged. The new publishing process requires only GitHub upload plus automatic deployment.
 
-## Editorial conventions
-Articles are stored as plain text and rendered using HTML escaping; paragraph breaks are maintained. HTML entered by authors is treated as text. This avoids injection but means rich text and images are not yet implemented. The homepage's five pillars are editorial outlines, not sourced factual research or finished statutory proposals. No historical essay has been fabricated for publication.
+## Editorial note
 
-## Code
-- `public/index.html`: page shell
-- `public/styles.css`: responsive theme
-- `public/app.js`: public routes and publishing interface
-- `src/index.js`: API and Cloudflare Access JWT verification
-- `schema.sql`: database schema
-
-## Limitations
-- Publishing requires D1 and Access setup.
-- One admin account; no user management.
-- Plain text editor; image uploads, formatted headings, and scheduled publication not implemented.
-- Public pages use client-side routing; Cloudflare's SPA asset fallback must remain enabled.
-- This is a working custom publishing foundation, not a fully configured managed CMS.
+The built-in five-pillar policy statements are a preliminary outline, not sourced legislative proposals. Upload a researched history essay when ready; the site does not present a fabricated essay as historical fact.
