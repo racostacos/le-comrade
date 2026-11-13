@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build-articles.mjs"
+    "build": "node scripts/build-articles.mjs",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "sanitize-html": "^2.13.0",
