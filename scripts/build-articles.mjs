@@ -2,6 +2,8 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import mammoth from "mammoth";
 import sanitizeHtml from "sanitize-html";
+import matter from "gray-matter";
+import { marked } from "marked";
 
 const sourceDir="articles", outDir="public/content", imageDir=path.join(outDir,"images");
 await fs.mkdir(sourceDir,{recursive:true});
@@ -46,6 +48,34 @@ for(const filename of files){
   articles.push({slug,title,section,sectionName:sectionNames[section],summary,body,published_at:publishedAt||"",source_file:filename});
   for(const message of result.messages.filter(m=>m.type==="warning"))console.warn(filename,message.message);
 }
+
+const cmsDir="content/posts";
+await fs.mkdir(cmsDir,{recursive:true});
+const cmsFiles=(await fs.readdir(cmsDir)).filter(name=>name.toLowerCase().endsWith(".md")).sort();
+for(const file of cmsFiles){
+  const raw=await fs.readFile(path.join(cmsDir,file),"utf8");
+  let data,markdown;
+  try{({data,content:markdown}=matter(raw));}catch(e){console.warn("Skipping invalid article frontmatter",file,e.message);continue;}
+  if(data.published!==true)continue;
+  const section=String(data.section||"reading");
+  if(!Object.hasOwn(sectionNames,section)){console.warn("Skipping article with unknown section",file);continue;}
+  const title=cleanText(data.title||"");
+  if(!title || !markdown.trim()){console.warn("Skipping article without a headline or body",file);continue;}
+  let publishedAt="";
+  if(data.date instanceof Date && !Number.isNaN(data.date.getTime()))publishedAt=data.date.toISOString().slice(0,10);
+  else if(typeof data.date==="string" && /^\\d{4}-\\d{2}-\\d{2}$/.test(data.date))publishedAt=data.date;
+  const slug=slugify(file.replace(/\\.md$/i,""));
+  const html=await marked.parse(markdown,{gfm:true,breaks:false});
+  const body=sanitizeHtml(html,{
+    allowedTags:["h1","h2","h3","h4","p","br","strong","em","b","i","u","s","ul","ol","li","blockquote","a","sup","sub","hr","table","thead","tbody","tr","td","th","img","del","code","pre"],
+    allowedAttributes:{a:["href","title"],img:["src","alt","title"],td:["colspan","rowspan"],th:["colspan","rowspan"]},
+    allowedSchemes:["http","https","mailto"],
+    allowedSchemesByTag:{img:["http","https"]}
+  });
+  const summary=cleanText(data.summary||"")||cleanText(markdown.replace(/[#*_`>\\[\\]()]/g,"")).slice(0,230);
+  articles.push({slug,title,section,sectionName:sectionNames[section],summary,body,published_at:publishedAt,source_file:file});
+}
+
 articles.sort((a,b)=>b.published_at.localeCompare(a.published_at)||a.title.localeCompare(b.title));
 await fs.writeFile(path.join(outDir,"articles.json"),JSON.stringify({articles},null,2)+"\n");
-console.log("Published",articles.length,"DOCX articles");
+console.log("Published",articles.length,"total articles ("+cmsFiles.length+" CMS files scanned)");
