@@ -2,12 +2,12 @@
 title: "Get Data Centers Out of Dixie "
 author: Ethan Drott
 section: dispatch
-summary: Secret agreements, uncertain benefits, and safeguards that leave
+summary: "Secret agreements, uncertain benefits, and safeguards that leave
   residents with unanswered questions. Louisiana has heard these promises
   before. Read why Livingston Parish needs an indefinite moratorium on data
-  centers. [Pledge your support for a citizen-led
-  petition](https://le-comrade.org/data-centers-out) and help us organize before
-  our officials commit us to another corporate promise.
+  centers. Livingston residents, please pledge your support for a citizen-led
+  petition: (https://le-comrade.org/data-centers-out) and help us organize
+  before our officials commit us to another corporate promise."
 date: 2026-11-13
 published: true
 ---
