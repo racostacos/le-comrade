@@ -1,0 +1,7 @@
+{
+  "name": "le-comrade",
+  "compatibility_date": "2026-11-12",
+  "assets": {
+    "directory": "./public"
+  }
+}
