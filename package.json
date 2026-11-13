@@ -6,7 +6,6 @@
     "build": "node scripts/build-articles.mjs"
   },
   "dependencies": {
-    "mammoth": "^1.9.0",
     "sanitize-html": "^2.13.0",
     "gray-matter": "^4.0.3",
     "marked": "^15.0.12"
