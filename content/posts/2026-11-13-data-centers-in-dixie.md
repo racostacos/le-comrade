@@ -1,5 +1,5 @@
 ---
-title: "Data Centers in Dixie "
+title: "Data Centers Out of Dixie "
 author: Ethan Drott
 section: dispatch
 summary: Secret agreements, uncertain benefits, and safeguards that leave
