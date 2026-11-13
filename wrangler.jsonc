@@ -16,5 +16,8 @@
       "database_name": "le-comrade-content",
       "database_id": "e83adaf2-9c8e-46b3-ae8e-aa755c3a1edf"
     }
-  ]
+  ],
+  "vars": {
+    "ACCESS_AUD": "9b39ebc52510909f599c8b16eaaa3feba836a199ea70680eef79bbbf32db4b93"
+  }
 }
