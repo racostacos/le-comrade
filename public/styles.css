@@ -50,3 +50,18 @@
 .reference-list{list-style:none;margin:0;padding:0;max-width:900px}
 .reference-list li{font:15px/1.75 Georgia,serif;padding:0 0 15px 25px;text-indent:-25px;overflow-wrap:anywhere}
 .reference-list a{font-size:13px}
+
+/* Clearly labeled, collapsible references for individual articles */
+.bibliography-collapsible{margin:24px 0 0;border:1px solid var(--line);padding:0;background:rgba(255,255,255,.14)}
+.bibliography-toggle{display:flex;justify-content:space-between;align-items:center;gap:16px;cursor:pointer;padding:20px 22px;list-style:none}
+.bibliography-toggle::-webkit-details-marker{display:none}
+.bibliography-toggle:hover,.bibliography-toggle:focus-visible{background:var(--cream)}
+.bibliography-toggle-text{display:flex;flex-direction:column;gap:8px;min-width:0}
+.bibliography-label{font-size:10px;letter-spacing:.15em;font-weight:700;color:var(--red)}
+.bibliography-toggle strong{font:700 clamp(19px,2.7vw,29px)/1.23 Georgia,serif}
+.bibliography-toggle-icon{display:block;width:12px;height:12px;flex-shrink:0;border-right:2px solid var(--red);border-bottom:2px solid var(--red);transform:rotate(45deg);transition:transform .15s}
+.bibliography-collapsible[open] .bibliography-toggle-icon{transform:rotate(225deg)}
+.bibliography-content{border-top:1px solid var(--line);padding:22px}
+.bibliography-content>p{font-size:14px;line-height:1.6;margin:0 0 22px}
+.bibliography-content>p a{color:var(--red);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:600px){.bibliography-toggle{padding:16px}.bibliography-content{padding:18px 16px}}
