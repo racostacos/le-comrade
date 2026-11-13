@@ -1,6 +1,13 @@
 ---
 title: "Ballot Initiatives: Giving Louisiana Back to Its People"
 section: vision
+summary: Louisianans are no strangers to waiting on change that never seems to
+  come. While our lawmakers sit on legislation that could improve the lives of
+  everyday people, citizens in other states have taken matters into their own
+  hands. Ballot initiatives give ordinary people the power to propose laws,
+  expand their rights, and make changes without waiting for permission from
+  politicians. So why don't Louisianans have that same right, and what would it
+  take to change that?
 date: 2026-11-13
 published: false
 ---
