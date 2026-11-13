@@ -7,15 +7,7 @@
   <meta name="theme-color" content="#222520">
   <title>Le Comrade | A Different Louisiana Is Possible</title>
   <link rel="stylesheet" href="/styles.css">
-  <script>
-    window.addEventListener("error", function(event) {
-      var main = document.getElementById("main");
-      if (main && main.textContent.includes("Setting the press")) {
-        main.textContent = "The page script failed to load: " + (event.message || "unknown error") + ". Please report this message.";
-      }
-    });
-  </script>
-  <script defer src="/app.js?v=fix-20261113-2" onerror="document.getElementById('main').textContent='The application script could not be downloaded. Please check that /app.js is accessible.'"></script>
+  <script defer src="/app.js"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -28,6 +20,6 @@
   </nav>
   <div class="ticker"><span>THE PEOPLE'S PRESS</span><p>LAND · LABOR · LIBERTY · LOUISIANA</p><span>VOL. I / NO. 001</span></div>
   <main id="main" tabindex="-1"><div class="loading">Setting the press...</div></main>
-  <footer class="footer"><div><b>LE COMRADE</b><p>Independent writing on Louisiana's history, power and possibilities.</p></div><div><a href="/sources">Sources & Corrections</a><a href="/about">About the publication</a><a href="/admin">Editorial login</a></div><small>© <span id="year"></span> Le Comrade. An independent publication.</small></footer>
+  <footer class="footer"><div><b>LE COMRADE</b><p>Independent writing on Louisiana's history, power and possibilities.</p></div><div><a href="/sources">Sources & Corrections</a><a href="/about">About the publication</a><a href="/admin">Publish an article</a></div><small>© <span id="year"></span> Le Comrade. An independent publication.</small></footer>
 </body>
 </html>
