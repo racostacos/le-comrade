@@ -32,6 +32,10 @@ function slugify(value){return String(value).normalize("NFKD").toLowerCase().rep
 async function api(request,env,url){
   if(!env.DB)return error("Database not connected. Configure Cloudflare D1 binding DB and run schema.sql.",503);
   const path=url.pathname;
+  if(!["GET","HEAD","OPTIONS"].includes(request.method)){
+    const origin=request.headers.get("origin");
+    if(origin && origin!==url.origin)return error("Cross-origin requests are not allowed",403);
+  }
   if(request.method==="GET" && path==="/api/posts"){
     const section=url.searchParams.get("section");
     if(section && !sections.has(section))return error("Unknown section");
