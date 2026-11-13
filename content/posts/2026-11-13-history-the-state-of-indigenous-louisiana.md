@@ -1,8 +1,7 @@
 ---
 title: The State of Indigenous Louisiana
 section: history
-summary: "When the French arrived on Louisiana shores, they wreaked havoc and
-  caused mayhem. "
+summary: "Before Louisiana was Louisiana, the Quinipissa and other Indigenous peoples already called this land home. French colonial accounts reveal a history of coercion, violence, disease, and enslavement that challenges the familiar story of Louisiana's founding."
 date: 2026-11-13
 published: true
 ---
