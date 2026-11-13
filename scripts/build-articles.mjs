@@ -40,7 +40,7 @@ for(const filename of files){
   const titleMatch=result.value.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
   const stripTags=s=>cleanText(s.replace(/<[^>]*>/g,""));
   const title=titleMatch?stripTags(titleMatch[1]):cleanText(stem.replace(/[-_]+/g," "));
-  const body=safe;
+  const body=titleMatch?safe.replace(/<h2[^>]*>[\\s\\S]*?<\\/h2>/i,"").trim():safe;
   const summary=stripTags((safe.match(/<p[^>]*>([\s\S]*?)<\/p>/i)||[])[1]||"").slice(0,230);
   if(!body.trim()){console.warn("Skipping empty document",filename);continue;}
   articles.push({slug,title,section,sectionName:sectionNames[section],summary,body,published_at:publishedAt||"",source_file:filename});
