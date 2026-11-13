@@ -41,3 +41,12 @@
 @media(max-width:760px){.book-list{grid-template-columns:1fr}.book-row{grid-template-columns:90px minmax(0,1fr)}.book-art{width:90px;min-height:125px}.book-art img{height:125px}.book-cover-fallback{min-height:125px}.archive-row{grid-template-columns:1fr;gap:10px}.archive-stamp{justify-self:start}.library-feature{padding:21px}}
 
 .book-art img[hidden]{display:none!important}
+
+/* Editorial source catalogue */
+.bibliography{margin:42px 0 60px;border-top:3px double var(--ink);padding-top:24px}
+.bibliography h2{font:700 clamp(26px,3.5vw,38px)/1.15 Georgia,serif;margin:0 0 12px}
+.bibliography>p{font-size:14px;line-height:1.6;margin:0 0 25px}
+.bibliography>p a,.reference-list a{color:var(--red);text-decoration:underline;text-underline-offset:3px}
+.reference-list{list-style:none;margin:0;padding:0;max-width:900px}
+.reference-list li{font:15px/1.75 Georgia,serif;padding:0 0 15px 25px;text-indent:-25px;overflow-wrap:anywhere}
+.reference-list a{font-size:13px}
