@@ -12,7 +12,7 @@ content:
     format: yaml-frontmatter
     filename: "{year}-{month}-{day}-{primary}.md"
     view:
-      fields: [title, section, published, date]
+      fields: [title, author, section, published, date]
       primary: title
       sort: [date, title]
       default:
@@ -22,6 +22,11 @@ content:
       - name: title
         label: Headline
         type: string
+        required: true
+      - name: author
+        label: Author
+        type: string
+        default: Ethan Drott
         required: true
       - name: section
         label: Newspaper section
