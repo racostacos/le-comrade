@@ -2,7 +2,7 @@ const main=document.querySelector("#main");
 const sectionNames={vision:"The Louisiana We Deserve",history:"The People's History",ledger:"Follow the Money",dispatch:"Parish Dispatch",reading:"Reading Room"};
 const descriptions={vision:"Five pillars of a more democratic Louisiana, where public institutions answer to the people.",history:"Louisiana history told through the lives, uprisings, organizing and resistance of its people.",ledger:"Research on land ownership, corporate power, public spending, wages and wealth.",dispatch:"Local reporting and commentary from Livingston Parish and the communities around it.",reading:"Independent essays, political theory, commentary and arguments in progress."};
 const pillars=[
- ["Power to the People","Voting rights, ballot initiatives, fair representation and public accountability."],
+ ["Power to the People","Voting rights, ballot initiatives, fair representation, public accountability, and restorative racial justice."],
  ["Louisiana Belongs to Louisianans","Land, industry, Indigenous restitution, worker ownership and corporate accountability."],
  ["A Life Worth Living","Universal healthcare, better schools and public services."],
  ["A Louisiana That Survives","Coastal restoration, recycling, environmental protection and industrial scrutiny."],
