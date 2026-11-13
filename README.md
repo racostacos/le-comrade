@@ -1,39 +1,50 @@
 # Le Comrade
 
-An independent Louisiana newspaper-style publication, hosted on Cloudflare at https://le-comrade.org.
+An independent Louisiana newspaper-style publication at https://le-comrade.org, hosted on Cloudflare Workers with article editing through [Pages CMS](https://app.pagescms.org/).
 
-## Publish an article (no website coding or editor login)
+## Write and publish an article
 
-1. Write your article in Microsoft Word, Google Docs (export as Word), or another editor, and save as **.docx**.
-2. Format the article title using **Heading 1** in the document. Use **Heading 2** for subheadings. Ordinary paragraphs, bold, italics, lists, tables, links, and inline pictures are converted automatically.
-3. Name the DOCX file: `YYYY-MM-DD_section_Article Title.docx`, for example `2026-11-13_history_The German Coast Uprising.docx`. Sections are `vision`, `history`, `ledger`, `dispatch`, `reading`. If no section is specified, the article goes to the Reading Room.
-4. In your browser, open **[Upload DOCX to Le Comrade](https://github.com/racostacos/le-comrade/upload/main/articles)**, select the file, and click **Commit changes**.
-5. Cloudflare Workers Builds runs `npm run build` automatically through `wrangler.jsonc` when deploying, converts DOCX documents into safe HTML, then deploys the generated articles as part of the same build. Published articles appear in their respective section and on the front page.
+1. Go to https://app.pagescms.org/ and **sign in with GitHub**.
+2. Authorize the Pages CMS GitHub App for `racostacos/le-comrade` when prompted.
+3. Open `racostacos/le-comrade`, branch `main`, and click **Articles**.
+4. Choose **New**, write your headline, pick a newspaper section, add a summary and date, and write in the visual rich-text editor.
+5. Leave **Published on website** off while drafting. Switch it on when you're ready for visitors to see the article, then **Save**.
+6. Your save commits an editable Markdown file to GitHub. Cloudflare deploys the updated publication automatically.
 
-The website's **/admin** page also links to the upload screen. There is **no separate website editor login** to configure. Your GitHub account is the upload permission system. Since uploads to the main repository publish automatically, **keep unfinished drafts in Word and only upload when ready**.
+The public site's **Publish an article** link at `/publish` takes you to Pages CMS. The main **LE COMRADE masthead and navigation remain unchanged**.
 
-### Edit or unpublish
+### The newspaper sections
 
-To edit, upload a revised DOCX with **the same filename** and replace the existing file in GitHub using its file management flow, or commit a change replacing that file. To unpublish, remove the DOCX from `articles/` in GitHub. The next Cloudflare deployment regenerates the article index. Do not edit generated `public/content/articles.json` manually.
+- `vision`: The Louisiana We Deserve
+- `history`: The People's History
+- `ledger`: Follow the Money
+- `dispatch`: Parish Dispatch
+- `reading`: Reading Room
+
+### Draft privacy
+
+Entries with `published: false` are excluded from the public website. However, **this repository is public**, so drafts committed to GitHub are *not confidential* even though they are hidden from the website. Do not save sensitive or private unpublished material in this repository.
+
+### Existing article
+
+**The State of Indigenous Louisiana** has been migrated from DOCX into `content/posts/2026-11-13-history-the-state-of-indigenous-louisiana.md`. It should appear in Pages CMS under Articles, and the existing public article URL remains the same.
+
+### Building
+
+- Pages CMS uses `.pages.yml` in the repository root.
+- Markdown files are stored in `content/posts/`.
+- Uploaded images are stored in `public/media/`.
+- `scripts/build-articles.mjs` reads the Markdown files, filters by `published`, renders safe HTML, and writes `public/content/articles.json`.
+- The `npm run build` script generates the article index.
+- The `postinstall` script also runs this build when dependencies are installed on Cloudflare.
+- `wrangler.jsonc` is configured for the static site and includes the local build definition. Cloudflare Workers Builds may ignore this Wrangler build setting; when needed set Cloudflare **Workers & Pages → le-comrade → Settings → Build → Build command** to `npm run build`. The deploy command remains `npx wrangler deploy`.
+
+### Editing and unpublishing
+
+Edit an article by opening it in Pages CMS and saving changes. To remove it from public pages, turn off **Published on website** and save. You can delete it in Pages CMS when you want to remove the source file.
 
 ### Troubleshooting
 
-Open **Cloudflare → Workers & Pages → le-comrade → Deployments**. Check the latest build log. The Wrangler deployment command runs the document converter first; the log should show `Published 1 DOCX articles` (or the corresponding total). Cloudflare must install the dependencies from `package.json`. If there is no conversion log, ensure the latest `wrangler.jsonc` with `build.command` has deployed.
+If the new article isn't visible, inspect the latest Cloudflare deployment log for `Built N published Pages CMS article(s)`. A successful deployment is required. If this message is missing, ensure the Cloudflare build command is `npm run build` and that the deployment has the latest GitHub commit.
 
-Files generated during a Cloudflare deployment are ephemeral build artifacts. They do not need to be committed back to GitHub. The `public/content/articles.json` file in GitHub may therefore lag behind the live deployed site; the live copy is regenerated from the Word documents at deployment time.
-
-## Project structure
-
-- `public/index.html`: existing masthead and navigation (left intact during DOCX publishing simplification)
-- `public/styles.css`: responsive newspaper and document styling
-- `public/app.js`: page routing and static article reader
-- `articles/`: your Word documents, published from GitHub
-- `scripts/build-articles.mjs`: converts DOCX to cleaned HTML, saves images
-- `public/content/articles.json`: generated article index (do not edit manually)
-- `wrangler.jsonc`: Cloudflare static site and automatic document build command
-
-The previous D1 database API, administrator login code, and database schema have been removed from the repository. The site now serves static files and Word-generated articles only. The masthead is unchanged.\n\n**Cloudflare dashboard note:** The old D1 database and Zero Trust Access application are external Cloudflare resources; removing code does not delete those resources or their settings. If the old Access application still protects `/admin`, it may show a login screen before the upload instructions. The direct GitHub upload link works independently of that application.
-
-## Editorial note
-
-The built-in five-pillar policy statements are a preliminary outline, not sourced legislative proposals. Upload a researched history essay when ready; the site does not present a fabricated essay as historical fact.
+The older custom D1 and Cloudflare Access editor has been removed from the GitHub repository. Any D1 database or Access application previously created in the Cloudflare dashboard is a separate external resource and is not deleted by removing its code.
