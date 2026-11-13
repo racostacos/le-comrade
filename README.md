@@ -48,3 +48,14 @@ Edit an article by opening it in Pages CMS and saving changes. To remove it from
 If the new article isn't visible, inspect the latest Cloudflare deployment log for `Built N published Pages CMS article(s)`. A successful deployment is required. If this message is missing, ensure the Cloudflare build command is `npm run build` and that the deployment has the latest GitHub commit.
 
 The older custom D1 and Cloudflare Access editor has been removed from the GitHub repository. Any D1 database or Access application previously created in the Cloudflare dashboard is a separate external resource and is not deleted by removing its code.
+
+
+## Data Centers Out pledge collection
+
+The /data-centers-out page contains a resident pledge to sign a future Livingston Parish initiative petition. **An online pledge is not an official petition signature.** The page links the parish Home Rule Charter, Article VI, Section 6-01.
+
+The API is in `src/pledge-worker.js`; `wrangler.jsonc` binds `PLEDGES` as a private Cloudflare Workers KV namespace and enables the API route. The current Wrangler documentation describes automatic KV provisioning on deploy, including from GitHub-based deployments. Confirm the deployment successfully provisioned the namespace: open `https://le-comrade.org/api/pledge`. A JSON response of `{"ready":true}` means the form can save pledges; `{"ready":false}` means it cannot. The form disables submissions if the storage binding is missing or the endpoint is unavailable and does not claim to have saved data.
+
+Cloudflare dashboard: Workers & Pages > le-comrade > Settings > Bindings should show a KV namespace named `PLEDGES`. If it does not exist, complete the deployment and provision/bind the namespace manually. Do not open pledge collection until this check succeeds.
+
+Pledge records (name, email, optional ZIP code, pledge and update selections, timestamps) are stored only in the private KV namespace, keyed by a SHA-256 digest of the normalized email address. Repeat submissions using the same email update their existing record. To review pledges, use the Cloudflare dashboard's KV storage interface. These are not official elector signatures, and should not be represented as official counts. Follow applicable data-protection and privacy rules. Consider adding verification and abuse controls before wide promotion.
