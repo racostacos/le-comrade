@@ -25,6 +25,10 @@ jobs:
           node-version: "22"
       - name: Install DOCX converter
         run: npm install --no-audit --no-fund
+      - name: Check JavaScript syntax
+        run: |
+          node --check public/app.js
+          node --check scripts/build-articles.mjs
       - name: Build articles
         run: npm run build
       - name: Commit generated newspaper content
