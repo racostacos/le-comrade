@@ -9,7 +9,7 @@ summary: Secret agreements, uncertain benefits, and safeguards that leave
   petition](https://le-comrade.org/data-centers-out) and help us organize before
   our officials commit us to another corporate promise.
 date: 2026-11-13
-published: false
+published: true
 ---
 Our local leadership has not demonstrated that it is prepared to represent the interests and well-being of the People when a corporation arrives waving billions of dollars. Livingston Parish should impose an **indefinite moratorium on data center development**. Residents deserve to know what they are being asked to surrender, what they are guaranteed in return, and who pays when the promises fall short.
 
