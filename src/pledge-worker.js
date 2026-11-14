@@ -3,6 +3,24 @@ const norm=s=>String(s??"").trim();
 export default {
   async fetch(request,env){
     const url=new URL(request.url);
+    if(url.pathname==="/api/admin/pledges"){
+      if(request.method!=="GET")return reply({error:"Method not allowed."},405);
+      if(!env.PLEDGES||!env.PLEDGE_ADMIN_TOKEN)return reply({error:"Administrative access is not configured."},503);
+      const auth=request.headers.get("Authorization")||"";
+      const token=auth.startsWith("Bearer ")?auth.slice(7):"";
+      const expected=env.PLEDGE_ADMIN_TOKEN;
+      // Compare token contents in fixed time; never expose secret values or pledge keys publicly.
+      const a=new TextEncoder().encode(token),b=new TextEncoder().encode(expected);
+      let different=a.length^b.length;
+      for(let i=0;i<Math.max(a.length,b.length);i++)different|=(a[i]||0)^(b[i]||0);
+      if(different!==0||!token)return reply({error:"Unauthorized."},401);
+      const cursor=url.searchParams.get("cursor")||undefined;
+      let batch;
+      try{batch=await env.PLEDGES.list({prefix:"pledge:",limit:100,...(cursor?{cursor}:{})});}
+      catch{return reply({error:"Unable to list pledges."},503)}
+      const records=await Promise.all(batch.keys.map(item=>env.PLEDGES.get(item.name,{type:"json"})));
+      return reply({pledges:records.filter(Boolean),more:!batch.list_complete,cursor:batch.list_complete?null:batch.cursor});
+    }
     if(url.pathname!=="/api/pledge")return env.ASSETS.fetch(request);
     if(request.method==="GET")return reply({ready:!!env.PLEDGES});
     if(request.method!=="POST")return reply({error:"Method not allowed."},405);
