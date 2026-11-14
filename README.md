@@ -59,3 +59,17 @@ The API is in `src/pledge-worker.js`; `wrangler.jsonc` binds `PLEDGES` as a priv
 Cloudflare dashboard: Workers & Pages > le-comrade > Settings > Bindings should show a KV namespace named `PLEDGES`. If it does not exist, complete the deployment and provision/bind the namespace manually. Do not open pledge collection until this check succeeds.
 
 Pledge records (name, email, optional ZIP code, pledge and update selections, timestamps) are stored only in the private KV namespace, keyed by a SHA-256 digest of the normalized email address. Repeat submissions using the same email update their existing record. To review pledges, use the Cloudflare dashboard's KV storage interface. These are not official elector signatures, and should not be represented as official counts. Follow applicable data-protection and privacy rules. Consider adding verification and abuse controls before wide promotion.
+
+
+### Viewing pledge submissions securely
+
+Do **not** paste the Cloudflare KV example that writes and deletes `KEY` into the active Worker. It would overwrite pledge handling, delete the example key, and could expose KV data.
+
+The Worker includes a read-only admin endpoint, `GET /api/admin/pledges`, using the existing private `PLEDGES` binding. It will not reveal records unless the Cloudflare Worker has a secret named `PLEDGE_ADMIN_TOKEN` and requests supply the matching Bearer token. This secret is never placed in the website or GitHub.
+
+1. In Cloudflare, open Workers & Pages → le-comrade → Settings → Variables and Secrets; add a **Secret** called `PLEDGE_ADMIN_TOKEN` with a long random value (at least 32 random bytes recommended). Save and deploy as required.
+2. On your own computer, request the pledges, supplying the secret via an environment variable instead of putting it in a website address or browser console:
+   `curl -H "Authorization: Bearer $PLEDGE_ADMIN_TOKEN" https://le-comrade.org/api/admin/pledges`
+3. Results contain up to 100 pledge records per response. If `more` is `true`, use the returned `cursor` as `?cursor=<URL-encoded cursor>` to fetch the next page. Do not publish or commit the resulting JSON, as it contains personal contact information.
+
+The admin endpoint intentionally does not support write or delete operations. The existing public pledge endpoint continues to create and update pledges. If there is no admin secret yet, the endpoint responds with 503 and exposes no records.
