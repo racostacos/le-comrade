@@ -87,3 +87,5 @@ Online payments are OFF by default. Do not enable until a processor explicitly a
 ### Cash App links
 
 Residents may submit their own Cash App Pool or payment link with a monetary request. Review the link in Cash App, confirm the recipient and goal, then check the link review box before publishing. Only HTTPS cash.app links are accepted. Payments are handled by Cash App, not LeHelp; never claim payments have been confirmed by LeHelp or use clicks as a donation count. Cash App Pool contributions can be tracked on Cash App. Cash App links are public after approval. See https://cash.app/send/pools for eligibility and fees. Do not use this for political contributions or commercial payments.
+
+Private messages: a visitor can use Send private message on a listing. Messages are private pending records, never published; the moderator can relay the message using the private dashboard's email action. The sender's email is included only if they explicitly opted in to private sharing. No automatic email delivery or in-site messaging account is configured. The public feed displays timestamps in Central Time.
