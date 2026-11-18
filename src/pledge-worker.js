@@ -1,9 +1,17 @@
 import {handleLeHelp} from "./lehelp-worker.js";
 const reply=(data,status=200)=>Response.json(data,{status,headers:{"Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}});
 const norm=s=>String(s??"").trim();
+// Temporary publication pause; keep private moderation and stored data intact.
+const LEHELP_PUBLIC=false;
 export default {
   async fetch(request,env){
     const url=new URL(request.url);
+    if(!LEHELP_PUBLIC){
+      const p=url.pathname;
+      const adminPath=["/lehelp/admin","/lehelp/admin/","/lehelp/admin/index.html","/lehelp/admin.js","/lehelp/help.css"].includes(p);
+      if(p.startsWith("/api/lehelp/")&&p!=="/api/lehelp/admin"&&p!=="/api/lehelp/payments/webhook")return reply({error:"Not found."},404);
+      if((p==="/lehelp"||p.startsWith("/lehelp/")||(url.hostname==="lehelp.le-comrade.org"&&p==="/"))&&!adminPath)return new Response("Not found.",{status:404,headers:{"Cache-Control":"no-store","X-Robots-Tag":"noindex, nofollow","Content-Type":"text/plain; charset=utf-8"}});
+    }
     if(url.pathname.startsWith("/api/lehelp/"))return handleLeHelp(request,env);
     if(url.hostname==="lehelp.le-comrade.org"&&url.pathname==="/")return env.ASSETS.fetch(new Request(new URL("/lehelp/",url),request));
     if(url.pathname==="/api/admin/pledges"){
