@@ -73,3 +73,9 @@ The Worker includes a read-only admin endpoint, `GET /api/admin/pledges`, using 
 3. Results contain up to 100 pledge records per response. If `more` is `true`, use the returned `cursor` as `?cursor=<URL-encoded cursor>` to fetch the next page. Do not publish or commit the resulting JSON, as it contains personal contact information.
 
 The admin endpoint intentionally does not support write or delete operations. The existing public pledge endpoint continues to create and update pledges. If there is no admin secret yet, the endpoint responds with 503 and exposes no records.
+
+## LeHelp community board
+
+Public page: /lehelp/. To make lehelp.le-comrade.org resolve, add it as a Custom Domain to the existing le-comrade Worker in Cloudflare (Settings → Domains & Routes). Keep the existing le-comrade.org domain. The Worker serves the LeHelp page at the new hostname's root. The site uses a distinct private KV binding, LEHELP; verify it is provisioned in the dashboard and GET /api/lehelp/submit returns {"ready":true}. If not, bind a new KV namespace as LEHELP before collecting requests.
+
+Set a long random Cloudflare Worker secret LEHELP_ADMIN_TOKEN (never in GitHub), then visit /lehelp/admin/ to moderate. The public feed only returns approved public fields, never the submitter's email. Pending and public posts expire after 30 days. The private coordination email expires with the published post. Submissions remain disabled until the admin secret and storage are configured. Respond privately to coordination requests; do not publish them. Approvals and removals require the secret. No payment handling or public personal contact details. Keep the feed modest and review it weekly; manually remove fulfilled or outdated requests and post a community update with the contributor's consent. Before promoting the board, configure Cloudflare rate limiting or other abuse protection and publish a privacy and safety policy.

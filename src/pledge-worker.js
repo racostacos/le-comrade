@@ -1,8 +1,11 @@
+import {handleLeHelp} from "./lehelp-worker.js";
 const reply=(data,status=200)=>Response.json(data,{status,headers:{"Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}});
 const norm=s=>String(s??"").trim();
 export default {
   async fetch(request,env){
     const url=new URL(request.url);
+    if(url.pathname.startsWith("/api/lehelp/"))return handleLeHelp(request,env);
+    if(url.hostname==="lehelp.le-comrade.org"&&url.pathname==="/")return env.ASSETS.fetch(new Request(new URL("/lehelp/",url),request));
     if(url.pathname==="/api/admin/pledges"){
       if(request.method!=="GET")return reply({error:"Method not allowed."},405);
       if(!env.PLEDGES||!env.PLEDGE_ADMIN_TOKEN)return reply({error:"Administrative access is not configured."},503);
