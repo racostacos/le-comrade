@@ -1,5 +1,6 @@
+import { paymentFeed, paymentRoute } from "./lehelp-payments.js";
 const towns=new Set(["Livingston","Satsuma","Walker","Denham Springs","Albany","Holden","Springfield","Watson","Other Livingston Parish"]);
-const types=new Set(["request","offer","update"]);
+const types=new Set(["request","offer"]);
 const response=(x,status=200)=>Response.json(x,{status,headers:{"Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}});
 const str=x=>typeof x==="string"?x.trim():"";
 function verifyPost(x){const name=str(x.name),town=str(x.town),type=str(x.type),title=str(x.title),details=str(x.details),amount=x.amount===""||x.amount==null?null:Number(x.amount);
@@ -8,9 +9,10 @@ return {name,town,type,title,details,amount};}
 function authorized(req,env){const token=req.headers.get("Authorization")||"",expected=env.LEHELP_ADMIN_TOKEN?"Bearer "+env.LEHELP_ADMIN_TOKEN:"";if(!expected)return false;const a=new TextEncoder().encode(token),b=new TextEncoder().encode(expected);let diff=a.length^b.length;for(let i=0;i<Math.max(a.length,b.length);i++)diff|=(a[i]||0)^(b[i]||0);return diff===0;}
 async function readList(kv,prefix){const keys=await kv.list({prefix,limit:100});return Promise.all(keys.keys.map(x=>kv.get(x.name,{type:"json"})));}
 export async function handleLeHelp(request,env){const url=new URL(request.url),kv=env.LEHELP,path=url.pathname,method=request.method;
+if(path.startsWith("/api/lehelp/payments/"))return paymentRoute(request,env);
 if(path==="/api/lehelp/submit"&&method==="GET")return response({ready:!!kv&&!!env.LEHELP_ADMIN_TOKEN});
 if(!kv)return response({error:"LeHelp storage is not configured."},503);
-if(path==="/api/lehelp/feed"&&method==="GET"){try{const rows=await readList(kv,"published:");return response({posts:rows.filter(Boolean).map(({id,name,town,type,title,details,amount,publishedAt})=>({id,name,town,type,title,details,amount,publishedAt})).sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt))})}catch{return response({error:"Could not load the community feed."},503)}}
+if(path==="/api/lehelp/feed"&&method==="GET"){try{const rows=await readList(kv,"published:");return response({posts:await paymentFeed(env,rows.filter(p=>p&&types.has(p.type)).map(({id,name,town,type,title,details,amount,publishedAt})=>({id,name,town,type,title,details,amount,publishedAt})).sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt)))})}catch{return response({error:"Could not load the community feed."},503)}}
 if(method==="POST"){if(request.headers.get("origin")!==url.origin)return response({error:"Submission origin not allowed."},403);if(!(request.headers.get("content-type")||"").startsWith("application/json"))return response({error:"Invalid format."},415)}
 if(path==="/api/lehelp/submit"&&method==="POST"){if(!env.LEHELP_ADMIN_TOKEN)return response({error:"Submissions are not open yet."},503);let data;try{const raw=await request.text();if(raw.length>5000)return response({error:"Submission too long."},413);data=JSON.parse(raw)}catch{return response({error:"Invalid submission."},400)}if(!data||typeof data!=="object")return response({error:"Invalid submission."},400);if(str(data.website))return response({ok:true});const post=verifyPost(data),email=str(data.email).toLowerCase(),related=str(data.related);if(!post||email.length>180||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||data.consent!==true)return response({error:"Please complete the required fields and consent."},400);if(related&&(!/^[0-9a-f-]{36}$/.test(related)||!(await kv.get("published:"+related))))return response({error:"The original post is no longer available."},400);
 const id=crypto.randomUUID();try{await kv.put("pending:"+id,JSON.stringify({...post,id,email,related,createdAt:new Date().toISOString()}),{expirationTtl:2592000})}catch{return response({error:"Unable to save your submission."},503)}return response({ok:true})}
