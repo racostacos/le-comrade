@@ -26,8 +26,7 @@ content:
       - name: author
         label: Author
         type: string
-        default: Ethan Drott
-        required: true
+        required: false
       - name: section
         label: Newspaper section
         type: select

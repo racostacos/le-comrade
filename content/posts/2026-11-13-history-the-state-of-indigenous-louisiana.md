@@ -1,6 +1,5 @@
 ---
 title: European Arrival
-author: Ethan Drott
 section: history
 summary: Before Louisiana was Louisiana, the Quinipissa and other Indigenous
   peoples already called this land home. French colonial accounts reveal a

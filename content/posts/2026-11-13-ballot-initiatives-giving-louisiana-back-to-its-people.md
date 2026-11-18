@@ -1,6 +1,5 @@
 ---
 title: "Ballot Initiatives: Giving Louisiana Back to Its People"
-author: Ethan Drott
 section: vision
 summary: Louisianans are no strangers to waiting on change that never seems to
   come. While our lawmakers sit on legislation that could improve the lives of

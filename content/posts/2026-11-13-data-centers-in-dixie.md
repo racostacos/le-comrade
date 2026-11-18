@@ -1,6 +1,5 @@
 ---
 title: "Get Data Centers Out of Dixie "
-author: Ethan Drott
 section: dispatch
 summary: "Secret agreements, uncertain benefits, and safeguards that leave
   residents with unanswered questions. Louisiana has heard these promises

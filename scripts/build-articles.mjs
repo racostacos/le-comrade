@@ -36,7 +36,7 @@ for(const file of files){
   let date="";
   if(data.date instanceof Date && !Number.isNaN(data.date.getTime()))date=data.date.toISOString().slice(0,10);
   else if(typeof data.date==="string" && /^\d{4}-\d{2}-\d{2}$/.test(data.date))date=data.date;
-  const author=clean(data.author)||"Ethan Drott";
+  const author=clean(data.author);
   const summary=clean(data.summary)||clean(content.replace(/[#*_`>\[\]()]/g,"")).slice(0,230);
   articles.push({slug,title,author,section,sectionName:sectionNames[section],summary,body,published_at:date});
 }
